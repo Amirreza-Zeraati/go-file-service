@@ -2,13 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload your File</title>
+    <title>Resumable File Upload</title>
 </head>
 <body>
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="file" id="file">
-        <button type="submit">Upload</button>
+<input type="file" id="fileInput"/>
+<button onclick="uploadFile()">Upload</button>
 
-    </form>
+<script>
+    async function uploadFile() {
+        const file = document.getElementById("fileInput").files[0];
+        const chunkSize = 1024 * 1024; // 1MB
+        const totalChunks = Math.ceil(file.size / chunkSize);
+        const fileId = Date.now().toString(); // could use hash instead
+
+        for (let i = 0; i < totalChunks; i++) {
+            const start = i * chunkSize;
+            const end = Math.min(start + chunkSize, file.size);
+            const chunk = file.slice(start, end);
+
+            const formData = new FormData();
+            formData.append("fileId", fileId);
+            formData.append("fileName", file.name);
+            formData.append("chunk", chunk);
+            formData.append("chunkIndex", i);
+            formData.append("totalChunks", totalChunks);
+
+            const response = await fetch("/upload-chunk", {
+                method: "POST",
+                body: formData,
+            });
+            if (!response.ok) {
+                alert("Upload failed at chunk " + i);
+                return;
+            }
+        }
+        alert("Upload completed!");
+    }
+</script>
 </body>
 </html>
