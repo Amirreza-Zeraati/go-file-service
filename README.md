@@ -49,7 +49,7 @@ This project is a simple file upload server built using [Gin](https://github.com
 #### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/amirreza-zeraati/go-file-service.git
+git clone https://github.com/Amirreza-Zeraati/go-file-service.git
 cd go-file-service
 ```
 
@@ -68,9 +68,15 @@ go get github.com/gin-gonic/gin
 go run main.go
 ```
 
-#### 4. Open in Browser
+#### 4. Create .env file (if you want)
 
-Visit: [http://localhost:8080/](http://localhost:8080/)
+```bash
+PORT=3000
+```
+
+#### 5. Open in Browser
+
+Visit: [http://localhost:3000/](http://localhost:3000/)
 
 ---
 
@@ -92,25 +98,16 @@ Visit: [http://localhost:8080/](http://localhost:8080/)
 ### 📌 Notes
 
 * Final files are saved in the `uploads/` directory.
-* Temporary chunk folders are stored in `temp_chunks/`.
+* Temporary chunk folders are also stored in `uploads/` but will remove after complete upload.
 * File name conflicts are handled by appending a number to the new file.
 
 ---
 
 ### 🧪 TODO / Improvements
 
-* [ ] Add support for resumable uploads using unique file IDs
 * [ ] Add progress bar to the frontend
 * [ ] Add download route
 * [ ] Handle interrupted uploads and resume from last chunk
 * [ ] Add authentication and rate-limiting
 
 ---
-
-### 📝 License
-
-MIT License. Feel free to use and modify.
-
----
-
-Let me know if you'd like this generated as an actual file (`README.md`) or want to include screenshots or frontend styling tips!
